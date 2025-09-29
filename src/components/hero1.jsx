@@ -11,12 +11,16 @@ import { heroOne, heroTwo, mobilehero, mobileone } from '../assets';
 
 
 const Hero1 = ({ expandedCard, setExpandedCard, onMainCardClick }) => {
+  const [mobileMainExpanded, setMobileMainExpanded] = useState(false);
   // Unified handler for both button and card clicks
   const handleCardClick = (cardType) => {
     setExpandedCard(cardType);
   };
   const handleClose = () => {
     setExpandedCard(null);
+  };
+  const handleMobileMainClick = () => {
+    setMobileMainExpanded(true);
   };
 
 
@@ -46,11 +50,11 @@ const Hero1 = ({ expandedCard, setExpandedCard, onMainCardClick }) => {
           </div>
           <div />
         </div>
-        {/* Main Card: 40vh */}
+        {/* Main Card: 40vh, expands to 100vw/vh and hides others when clicked */}
         <div
-          className="rounded-2xl bg-black w-full mt-2 mb-4 p-5 relative overflow-hidden flex flex-col justify-between"
-          style={{ height: '40vh', minHeight: 220 }}
-          onClick={onMainCardClick}
+          className={`rounded-2xl bg-black w-full mt-2 mb-4 p-5 relative overflow-hidden flex flex-col justify-between mobile-main-card${mobileMainExpanded ? ' expanded' : ''}`}
+          style={mobileMainExpanded ? { zIndex: 30, position: 'fixed', left: 0, top: 0 } : { height: '40vh', minHeight: 220 }}
+          onClick={handleMobileMainClick}
         >
           <div
             className="absolute inset-0 z-0 pointer-events-none select-none"
@@ -66,33 +70,35 @@ const Hero1 = ({ expandedCard, setExpandedCard, onMainCardClick }) => {
             <h1 className="text-white text-4xl font-bold leading-tight mb-2">Ready to Hack?</h1>
             <button className="flex items-center gap-2 text-white text-lg font-semibold mt-2">Get Updates <span><img src={whitearrow} alt="" /></span></button>
           </div>
-        <div className={`flex items-center justify-center gap-1 absolute  -translate-x-1/2 z-0 font-neue-xxthin m-0 p-0 overflow-hidden -bottom-[40vw] -right-[44vw] sm:-bottom-[30vh] sm:-right-[40vh]`}>
-                <span className={`   bg-[linear-gradient(-12deg,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_50%),conic-gradient(from_90deg_at_50%_50%,#E861FF_0%,#EF315E_50%,#FF315E_75%,#E861FF_90%)] bg-clip-text text-transparent -rotate-[12.32deg] text-[80vw] sm:text-[60vh]`}>2</span>
-                <span className={`  bg-[linear-gradient(-12deg,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_50%),conic-gradient(from_90deg_at_50%_50%,#E861FF_0%,#EF315E_50%,#FF315E_75%,#E861FF_90%)] bg-clip-text text-transparent -rotate-[12.32deg] translate-y-[5vw] lg:translate-y-[5vh] text-[80vw] sm:text-[60vh]`}>5</span>
-              </div>
-        </div>
-        {/* Play to win Card: 20vh */}
-        <div className="rounded-2xl bg-black w-full mb-4 p-5 relative flex flex-col overflow-hidden"
-          style={{height: '20vh', minHeight: 100}}>
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-white text-2xl font-bold">Play to win</span>
-            <button
-                    className="text-white text-sm font-bold mb-4 bg-black border-none text-bold rounded-lg hover:underline focus:outline-none cursor-pointer text-left w-fit"
-                    type="button"
-                  >
-                    COMING SOON
-                  </button>
-                  
+          <div className={`flex items-center justify-center gap-1 absolute  -translate-x-1/2 z-0 font-neue-xxthin m-0 p-0 overflow-hidden -bottom-[40vw] -right-[44vw] sm:-bottom-[30vh] sm:-right-[40vh]`}>
+            <span className={`   bg-[linear-gradient(-12deg,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_50%),conic-gradient(from_90deg_at_50%_50%,#E861FF_0%,#EF315E_50%,#FF315E_75%,#E861FF_90%)] bg-clip-text text-transparent -rotate-[12.32deg] text-[80vw] sm:text-[60vh]`}>2</span>
+            <span className={`  bg-[linear-gradient(-12deg,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_50%),conic-gradient(from_90deg_at_50%_50%,#E861FF_0%,#EF315E_50%,#FF315E_75%,#E861FF_90%)] bg-clip-text text-transparent -rotate-[12.32deg] translate-y-[5vw] lg:translate-y-[5vh] text-[80vw] sm:text-[60vh]`}>5</span>
           </div>
-          
         </div>
-        {/* Merch Card: 20vh */}
-        <div className="rounded-2xl bg-black w-full mb-4 p-5 relative flex flex-col gap-2 overflow-hidden"
-          style={{height: '20vh', minHeight: 100}}>
-          <span className="text-white text-2xl font-bold mb-2 z-10">Get our Merch</span>
-       
-          <img src={tiltT} alt="tilted T logo" className="absolute -bottom-8 -right-8 h-[120%] w-auto pointer-events-none select-none z-0" style={{filter:'brightness(1.2)'}} />
-        </div>
+        {/* Hide the rest of the cards if expanded */}
+        {!mobileMainExpanded && (
+          <>
+            {/* Play to win Card: 20vh */}
+            <div className="rounded-2xl bg-black w-full mb-4 p-5 relative flex flex-col overflow-hidden"
+              style={{height: '20vh', minHeight: 100}}>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-white text-2xl font-bold">Play to win</span>
+                <button
+                        className="text-white text-sm font-bold mb-4 bg-black border-none text-bold rounded-lg hover:underline focus:outline-none cursor-pointer text-left w-fit"
+                        type="button"
+                      >
+                        COMING SOON
+                      </button>
+              </div>
+            </div>
+            {/* Merch Card: 20vh */}
+            <div className="rounded-2xl bg-black w-full mb-4 p-5 relative flex flex-col gap-2 overflow-hidden"
+              style={{height: '20vh', minHeight: 100}}>
+              <span className="text-white text-2xl font-bold mb-2 z-10">Get our Merch</span>
+              <img src={tiltT} alt="tilted T logo" className="absolute -bottom-8 -right-8 h-[120%] w-auto pointer-events-none select-none z-0" style={{filter:'brightness(1.2)'}} />
+            </div>
+          </>
+        )}
       </div>
 
       {/* Desktop layout: visible md and up */}

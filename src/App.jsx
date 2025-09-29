@@ -21,6 +21,7 @@ import TabStickyNavbar from "./components/navTab.jsx";
 function App() {
   const [expandedCard, setExpandedCard] = useState(null);
   const [showHero, setShowHero] = useState(false);
+  const [mobileMainExpanded, setMobileMainExpanded] = useState(false);
 
   // Callback to show Hero and hide Hero1
   const handleShowHero = () => {
@@ -32,6 +33,11 @@ function App() {
     setShowHero(false);
   };
 
+  // Callback for mobile main card expand
+  const handleMobileMainExpand = () => {
+    setMobileMainExpanded(true);
+  };
+
   return (
     <>
       {/* Show Hero1 unless showHero is true */}
@@ -40,14 +46,29 @@ function App() {
           expandedCard={expandedCard}
           setExpandedCard={setExpandedCard}
           onMainCardClick={handleShowHero}
+          onMobileMainExpand={handleMobileMainExpand}
+          mobileMainExpanded={mobileMainExpanded}
           className="hidden sm:block"
         />
       )}
       {/* Show Hero when showHero is true */}
       {showHero && (
         <div>
-        <Hero />
-        <MobileStickyNavbar className="block" />
+          
+          <MobileStickyNavbar className="block" />
+          <TabStickyNavbar />
+          <AboutUs />
+          <Timeline />
+          <Sponsors />
+          <Judges />
+          <Faq />
+          <Footer />
+        </div>
+      )}
+      {mobileMainExpanded && (
+        <div>
+        
+          <MobileStickyNavbar className="block" />
           <TabStickyNavbar />
           <AboutUs />
           <Timeline />
@@ -70,7 +91,6 @@ function App() {
           <Footer />
         </div>
       )}
-     
     </>
   );
 }
